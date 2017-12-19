@@ -243,7 +243,7 @@ class SiteController extends Controller
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->upload()) {
                 // file is uploaded successfully
-                return;
+                return $this->redirect(['freebies']);
             }
         }
 

@@ -9,6 +9,10 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property integer $id_user
+ * @property string $status
+ * @property string $description
+ * @property integer $type
  */
 class Course extends \yii\db\ActiveRecord
 {
@@ -26,13 +30,10 @@ class Course extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 255],
-            [['name'], 'trim'],
-            [['name'], 'unique'],
-        	['name', 'filter', 'filter' => function ($value) {
-        		return preg_replace('!\s+!', ' ', $value);
-        	}],        		
+            [['name', 'id_user', 'status', 'description', 'type'], 'required'],
+            [['id_user', 'type'], 'integer'],
+            [['name', 'status'], 'string', 'max' => 100],
+            [['description'], 'string', 'max' => 200],
         ];
     }
 
@@ -42,8 +43,12 @@ class Course extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Course Name'),
+            'id' => 'ID',
+            'name' => 'Name',
+            'id_user' => 'Id User',
+            'status' => 'Status',
+            'description' => 'Description',
+            'type' => 'Type',
         ];
     }
 }

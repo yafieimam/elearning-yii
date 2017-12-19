@@ -3,119 +3,79 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\Course;
-use frontend\models\CourseSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use frontend\models\CreateCourse;
+use frontend\models\Enroll;
 
-/**
- * CourseController implements the CRUD actions for Course model.
- */
-class CourseController extends Controller
+class CourseController extends \yii\web\Controller
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Lists all Course models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new CourseSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Course model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Course model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
-        $model = new Course();
+        $model = new CreateCourse();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->render('create', ['model' => $model]);
+    }
+
+    public function actionEnroll()
+    {
+        $model = new Enroll();
+
+        $model->id_course = Yii::$app->request->get('id');
+        if ($model->upload()) {
+            // file is uploaded successfully
+            return $this->redirect(['index']);
         }
     }
 
-    /**
-     * Updates an existing Course model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
+    public function actionDeleteenroll()
     {
-        $model = $this->findModel($id);
+        $model = new Enroll();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $model->id_course = Yii::$app->request->get('idcourse');
+        $model->id_user = Yii::$app->request->get('iduser');
+        if ($model->delete()) {
+            // file is uploaded successfully
+            return $this->redirect(['view']);
         }
     }
 
-    /**
-     * Deletes an existing Course model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
+    public function actionIndex()
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        return $this->render('index');
     }
 
-    /**
-     * Finds the Course model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Course the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
+    public function actionUpdateenroll()
     {
-        if (($model = Course::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+        $model = new Enroll();
+
+        $model->id_course = Yii::$app->request->get('idcourse');
+        $model->id_user = Yii::$app->request->get('iduser');
+        if ($model->update()) {
+            // file is uploaded successfully
+            return $this->redirect(['view']);
         }
     }
+
+    public function actionSee()
+    {
+        return $this->render('see');
+    }
+
+    public function actionSeecourse()
+    {
+        return $this->render('seecourse');
+    }
+
+    public function actionSchedule()
+    {
+        return $this->render('schedule');
+    }
+
+
 }

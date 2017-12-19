@@ -1,35 +1,48 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-
 /* @var $this yii\web\View */
-/* @var $model app\models\Course */
+use common\models\CourseMember;
+use common\models\Course;
+use common\models\User;
+use yii\helpers\Html;
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Courses'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="course-view">
+<h1>course/view</h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<p>
+    You may change the content of this page by modifying
+    the file <code><?= __FILE__; ?></code>.
+</p>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'name',
-        ],
-    ]) ?>
-
-</div>
+<?php
+	//$titles = Yii::$app->db->createCommand('SELECT title FROM freebies')->queryColumn();
+	$member = CourseMember::find()->select('id_user, id_course')->where(['status' => 0, 'id_user' => Yii::$app->user->identity->id])->all();
+	foreach($member as $value){
+?>
+		<div class="col-sm-4 my-4">
+          <div class="card">
+            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+            <div class="card-body">
+              	<h4 class="card-title">
+              	<?php 
+              		$idcourse = $value->id_course; 
+              		$course = Course::find()->select('name')->where(['id' => $idcourse])->one();
+              		echo 'Course = ' . $course->name;
+              	?>
+          		</h4>
+              <p class="card-text">
+              	<?php 
+              		$iduser = $value->id_user; 
+              		$user = User::find()->select('username')->where(['id' => $iduser])->one();
+              		echo 'Nama Member = '.$user->username;
+              	?>
+              </p>
+            </div>
+            <div class="card-footer">
+              <?= Html::a('Accept', ['/course/updateenroll', 'iduser' => $value->id_user, 'idcourse' => $value->id_course], ['class'=>'btn btn-primary']) ?>
+              <?= Html::a('Deny', ['/course/deleteenroll', 'iduser' => $value->id_user, 'idcourse' => $value->id_course], ['class'=>'btn btn-primary']) ?>
+            </div>
+          </div>
+        </div>
+<?php
+	}
+?>

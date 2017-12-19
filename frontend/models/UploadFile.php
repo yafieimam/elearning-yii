@@ -20,6 +20,8 @@ class UploadFile extends Model
     {
         return [
             [['file'], 'file', 'skipOnEmpty' => false, 'extensions' => 'pdf'],
+            ['title', 'required'],
+            ['description', 'required'],
         ];
     }
     

@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use frontend\models\Role;
+use common\models\Freebies;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
@@ -33,16 +34,20 @@ $this->params['breadcrumbs'][] = $this->title;
 			<?php ActiveForm::end(); ?>
 			
 			<?php
-				Modal::begin([
-					'header' => '<h2>Freebies</h2>',
-					'toggleButton' => ['tag' => 'a', 'label' => 'Materi Data Mining'],
-				]);
+				//$titles = Yii::$app->db->createCommand('SELECT title FROM freebies')->queryColumn();
+				$freebies = Freebies::find()->select('title, description, filename')->all();
+				foreach($freebies as $value){
+					Modal::begin([
+						'header' => '<h2>'.$value->description.'</h2>',
+						'toggleButton' => ['tag' => 'a', 'label' => $value->title],
+					]);
 
-				echo \yii2assets\pdfjs\PdfJs::widget([
-				  'url' => Url::base().'/uploads/wibowo2016.pdf'
-				]);
+					echo \yii2assets\pdfjs\PdfJs::widget([
+					  'url' => Url::base().'/uploads/'.$value->filename
+					]);
 
-				Modal::end();
+					Modal::end();
+				}
 			?>
         </div>
     </div>
