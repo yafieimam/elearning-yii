@@ -5,29 +5,27 @@ namespace frontend\models;
 use Yii;
 
 /**
- * This is the model class for table "course".
+ * This is the model class for table "lesson".
  *
  * @property integer $id
+ * @property integer $id_course
  * @property string $title
  * @property string $slug
- * @property integer $mentor
- * @property integer $status
- * @property string $description
- * @property string $course_image
- * @property integer $type
+ * @property string $lesson_image
+ * @property string $text
+ * @property string $published
  * @property string $create_at
  * @property string $update_at
  * @property string $delete_at
  */
-class Course extends \yii\db\ActiveRecord
+class Lesson extends \yii\db\ActiveRecord
 {
-
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'course';
+        return 'lesson';
     }
 
     /**
@@ -36,11 +34,12 @@ class Course extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'slug', 'mentor', 'status', 'description', 'course_image', 'type'], 'required'],
-            [['mentor', 'status', 'type'], 'integer'],
-            [['create_at', 'update_at', 'delete_at'], 'safe'],
+            [['id_course', 'title', 'slug', 'lesson_image', 'text', 'published'], 'required'],
+            [['id_course'], 'integer'],
+            [['text'], 'string'],
+            [['published', 'create_at', 'update_at', 'delete_at'], 'safe'],
             [['title', 'slug'], 'string', 'max' => 100],
-            [['description', 'course_image'], 'string', 'max' => 200],
+            [['lesson_image'], 'string', 'max' => 200],
         ];
     }
 
@@ -51,13 +50,12 @@ class Course extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'id_course' => 'Id Course',
             'title' => 'Judul',
             'slug' => 'Slug',
-            'mentor' => 'Mentor',
-            'status' => 'Status',
-            'description' => 'Deskripsi',
-            'course_image' => 'Gambar Course',
-            'type' => 'Tipe Course',
+            'lesson_image' => 'Gambar Lesson',
+            'text' => 'Text untuk Lesson',
+            'published' => 'Published',
             'create_at' => 'Create At',
             'update_at' => 'Update At',
             'delete_at' => 'Delete At',

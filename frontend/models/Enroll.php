@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
-use common\models\CourseMember;
+use frontend\models\CourseMember;
 
 class Enroll extends Model
 {

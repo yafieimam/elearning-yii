@@ -1,26 +1,25 @@
 <?php
 /* @var $this yii\web\View */
-use common\models\Course;
+use frontend\models\Course;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
-<h1>course/delete</h1>
+<h1>List My Course</h1>
 
 <p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
+<?= Html::a('See Request Member in My Course', ['/course/view'], ['class'=>'btn btn-primary grid-button']) ?>
 </p>
 
 <?php
-	//$titles = Yii::$app->db->createCommand('SELECT title FROM freebies')->queryColumn();
-	$member = Course::find()->select('name, description, id')->where(['id_user' => Yii::$app->user->identity->id])->all();
+	$member = Course::find()->select('title, description, id, course_image')->where(['mentor' => Yii::$app->user->identity->id])->all();
 	foreach($member as $value){
 ?>
 		<div class="col-sm-4 my-4">
           <div class="card">
-            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+            <img class="card-img-top" src= <?php echo Url::base().'/uploads/course/images/'.$value->course_image; ?> style="height: 200px; width: 300px;"alt="">
             <div class="card-body">
-              	<h4 class="card-title"><?php echo $value->name ?></h4>
+              	<h4 class="card-title"><?php echo $value->title ?></h4>
               <p class="card-text"><?php echo $value->description ?></p>
             </div>
             <div class="card-footer">

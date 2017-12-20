@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use frontend\models\Role;
-use common\models\Freebies;
+use frontend\models\Freebies;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
@@ -15,31 +15,22 @@ use yii\bootstrap\Modal;
 $this->title = 'Freebies';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="site-signup">
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <p>
+	<?= Html::a('Insert Freebies', ['/site/insertfreebies'], ['class'=>'btn btn-primary grid-button']) ?>
+	</p>
     <div class="row">
         <div class="col-lg-5">
-			<?php $form = ActiveForm::begin(['options' => [ 'enctype' => 'multipart/form-data']]); ?>
-			
-				<?= $form->field($model, 'title')->textInput(['autofocus' => true]) ?>
-				
-				<?= $form->field($model, 'description') ?>
-				
-				<?= $form->field($model, 'file')->fileInput() ?>
-			
-			<div class="form-group">
-				<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
-			</div>
-			<?php ActiveForm::end(); ?>
-			
+        	<p><h3>List Freebies : </h3></p>
 			<?php
 				//$titles = Yii::$app->db->createCommand('SELECT title FROM freebies')->queryColumn();
 				$freebies = Freebies::find()->select('title, description, filename')->all();
 				foreach($freebies as $value){
 					Modal::begin([
-						'header' => '<h2>'.$value->description.'</h2>',
-						'toggleButton' => ['tag' => 'a', 'label' => $value->title],
+						'toggleButton' => ['tag' => 'a', 'label' => $value->title, 'class' => 'btn btn-primary grid-button'],
 					]);
 
 					echo \yii2assets\pdfjs\PdfJs::widget([

@@ -1,17 +1,12 @@
 <?php
 /* @var $this yii\web\View */
-use common\models\CourseMember;
-use common\models\Course;
+use frontend\models\CourseMember;
+use frontend\models\Course;
 use common\models\User;
 use yii\helpers\Html;
 
 ?>
-<h1>course/view</h1>
-
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+<h1>Request List of Member in My Course</h1>
 
 <?php
 	//$titles = Yii::$app->db->createCommand('SELECT title FROM freebies')->queryColumn();
@@ -25,8 +20,8 @@ use yii\helpers\Html;
               	<h4 class="card-title">
               	<?php 
               		$idcourse = $value->id_course; 
-              		$course = Course::find()->select('name')->where(['id' => $idcourse])->one();
-              		echo 'Course = ' . $course->name;
+              		$courses = Course::find()->select('title')->where(['id' => $idcourse])->one();
+              		echo 'Course = '.$courses->title;
               	?>
           		</h4>
               <p class="card-text">

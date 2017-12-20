@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -10,7 +10,9 @@ use Yii;
  * @property integer $id
  * @property integer $id_user
  * @property integer $id_course
- * @property string $tanggal
+ * @property string $tanggal_mulai
+ * @property string $tanggal_berakhir
+ * @property string $text_info
  */
 class CourseSchedule extends \yii\db\ActiveRecord
 {
@@ -28,9 +30,10 @@ class CourseSchedule extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_course', 'tanggal'], 'required'],
+            [['id_user', 'id_course', 'tanggal_mulai', 'tanggal_berakhir', 'text_info'], 'required'],
             [['id_user', 'id_course'], 'integer'],
-            [['tanggal'], 'safe'],
+            [['tanggal_mulai', 'tanggal_berakhir'], 'safe'],
+            [['text_info'], 'string', 'max' => 200],
         ];
     }
 
@@ -43,7 +46,9 @@ class CourseSchedule extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_user' => 'Id User',
             'id_course' => 'Id Course',
-            'tanggal' => 'Tanggal',
+            'tanggal_mulai' => 'Tanggal Mulai',
+            'tanggal_berakhir' => 'Tanggal Berakhir',
+            'text_info' => 'Informasi untuk Jadwal',
         ];
     }
 }

@@ -2,7 +2,9 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use kartik\date\DatePicker;
+use kartik\datetime\DateTimePicker;
+
+$id_course = Yii::$app->request->get('idcourse');
 
 ?>
 <h1>course/create</h1>
@@ -14,26 +16,35 @@ use kartik\date\DatePicker;
 
 	<div class="row">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-course']); ?>
+            <?php $form = ActiveForm::begin(['id' => 'form-schedule']); ?>
 
-                <?= $form->field($model, 'tanggal')->widget(DatePicker::widget([
-                    'name' => 'check_issue_date', 
-                    'value' => date('d-M-Y', strtotime('+2 days')),
-                    'options' => ['placeholder' => 'Select issue date ...'],
+                <?=
+                    $form->field($model, 'tanggal_mulai')->widget(DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Enter date and time...'],
                     'pluginOptions' => [
-                        'format' => 'dd-M-yyyy',
-                        'todayHighlight' => true
+                        'format'=>'yyyy-mm-dd hh:ii:ss',
+                        'todayHighlight'=>true,
+                        'autoclose'=>true
                     ]
-                ])) ?>
-                <!-- echo DatePicker::widget([
-                    'name' => 'check_issue_date', 
-                    'value' => date('d-M-Y', strtotime('+2 days')),
-                    'options' => ['placeholder' => 'Select issue date ...'],
+                    ]);
+                ?>
+
+                <?=
+                    $form->field($model, 'tanggal_berakhir')->widget(DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Enter date and time...'],
                     'pluginOptions' => [
-                        'format' => 'dd-M-yyyy',
-                        'todayHighlight' => true
+                        'format'=>'yyyy-mm-dd hh:ii:ss',
+                        'todayHighlight'=>true,
+                        'autoclose'=>true
                     ]
-                ]); -->
+                    ]);
+                ?>
+
+                <?= $form->field($model, 'text_info')->TextArea() ?>
+
+                <?=
+                    $form->field($model, 'id_course')->hiddenInput(['value'=> $id_course])->label(false);
+                ?>
 				
                 <div class="form-group">
                     <?= Html::submitButton('Create', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

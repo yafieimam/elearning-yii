@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -43,7 +43,7 @@ class Freebies extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'id_user' => Yii::t('app', 'Id User'),
-            'title' => Yii::t('app', 'Title'),
+            'title' => Yii::t('app', 'Judul'),
             'filename' => Yii::t('app', 'Filename'),
             'description' => Yii::t('app', 'Description'),
         ];

@@ -40,7 +40,9 @@ use common\models\User;
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Course', 'options' => ['class' => 'header']],
-					['label' => 'My Course', 'icon' => 'book', 'url' => ['/course'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1],
+                    ['label' => 'Course', 'icon' => 'book', 'url' => ['/course'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1],
+					['label' => 'My Course', 'icon' => 'book', 'url' => ['/course/see'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1],
+					['label' => 'Line Chatbot Integration', 'icon' => 'comment', 'url' => ['/site/linechatbot'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1],
                     ['label' => 'Course Categories', 'icon' => 'file-text-o', 'url' => ['/coursecategories'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role == 2],
                     ['label' => 'Freebies (Free Content)', 'icon' => 'tag', 'url' => ['/site/freebies'], 'visible' => !Yii::$app->user->isGuest],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

@@ -51,6 +51,18 @@ class SiteController extends Controller
                         'actions' => ['pdfjs', 'error'],
                         'allow' => true,
                     ],
+                    [
+                        'actions' => ['insertfreebies', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['linechatbot', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['generaterandom', 'error'],
+                        'allow' => true,
+                    ],
                 ],
             ],
             'verbs' => [
@@ -234,8 +246,13 @@ class SiteController extends Controller
     {
 		return $this->render('course\index');
 	}
+
+    public function actionFreebies()
+    {
+        return $this->render('freebies');
+    }
 	
-	public function actionFreebies()
+	public function actionInsertfreebies()
     {
 		$model = new UploadFile();
 
@@ -247,6 +264,21 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('freebies', ['model' => $model]);
+        return $this->render('insertfreebies', ['model' => $model]);
 	}
+
+    public function actionLinechatbot()
+    {
+        return $this->render('linechatbot');
+    }
+
+    public function actionGeneraterandom()
+    {
+        $length = rand(4,4);
+        $chars = array_merge(range(0,9));
+        shuffle($chars);
+        $random_angka = implode(array_slice($chars, 0,$length));
+
+        return $this->render('generaterandom', array('random_angka' => $random_angka,));
+    }
 }

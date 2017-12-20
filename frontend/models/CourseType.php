@@ -8,8 +8,7 @@ use Yii;
  * This is the model class for table "course_type".
  *
  * @property integer $id
- * @property string $name
- * @property string $info
+ * @property string $type_name
  */
 class CourseType extends \yii\db\ActiveRecord
 {
@@ -27,9 +26,8 @@ class CourseType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'info'], 'required'],
-            [['name'], 'string', 'max' => 100],
-            [['info'], 'string', 'max' => 200],
+            [['type_name'], 'required'],
+            [['type_name'], 'string', 'max' => 100],
         ];
     }
 
@@ -40,8 +38,7 @@ class CourseType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'info' => 'Info',
+            'type_name' => 'Type Name',
         ];
     }
 }

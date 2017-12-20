@@ -2,11 +2,11 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use frontend\models\CourseType;
 use yii\helpers\ArrayHelper;
 
+$id_course = Yii::$app->request->get('idcourse');
 ?>
-<h1>Buat Course Baru</h1>
+<h1>Buat Lesson Baru</h1>
 
 	<div class="row">
         <div class="col-lg-5">
@@ -16,11 +16,11 @@ use yii\helpers\ArrayHelper;
 
                 <?= $form->field($model, 'slug') ?>   
 
-                <?= $form->field($model, 'description')->TextArea() ?>
+                <?= $form->field($model, 'text')->TextArea() ?>
 
-                <?= $form->field($model, 'file')->fileInput()->label('Gambar Course') ?>
-				
-				<?= $form->field($model, 'type')->dropDownList(ArrayHelper::map(CourseType::find()->all(),'id','type_name'),['prompt'=>'Select Course Type']); ?>
+                <?= $form->field($model, 'file')->fileInput()->label('Gambar Lesson') ?>
+
+                <?= $form->field($model, 'id_course')->hiddenInput(['value'=> $id_course])->label(false) ?>
 				
                 <div class="form-group">
                     <?= Html::submitButton('Create', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
